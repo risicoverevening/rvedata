@@ -6,6 +6,7 @@
 #' @return A data frame with 63 variables
 #' @export
 #'
+#'
 #' @examples
 #' df <- phd_data()            # df w/ 100 observations and random seed
 #' df <- phd_data(1000)        # df w/ 1000 observations and random seed
@@ -191,7 +192,7 @@ phd_data <- function(nobs = 100, seed = NULL) {
 
   gender_age <-
     matrix(
-      rmultinom(nobs, 1, prob = population_means_gender_age),
+      stats::rmultinom(nobs, 1, prob = population_means_gender_age),
       nrow = nobs,
       ncol = length(population_means_gender_age),
       byrow = TRUE
@@ -205,7 +206,7 @@ phd_data <- function(nobs = 100, seed = NULL) {
 
   incsrc <-
     matrix(
-      rmultinom(nobs, 1, prob = population_means_incsrc),
+      stats::rmultinom(nobs, 1, prob = population_means_incsrc),
       nrow = nobs,
       ncol = length(population_means_incsrc),
       byrow = TRUE
@@ -215,7 +216,7 @@ phd_data <- function(nobs = 100, seed = NULL) {
 
   region <-
     matrix(
-      rmultinom(nobs, 1, prob = population_means_region),
+      stats::rmultinom(nobs, 1, prob = population_means_region),
       nrow = nobs,
       ncol = length(population_means_region),
       byrow = TRUE
@@ -225,7 +226,7 @@ phd_data <- function(nobs = 100, seed = NULL) {
 
   PCG <-
     matrix(
-      rmultinom(nobs, 1, prob = population_means_PCG),
+      stats::rmultinom(nobs, 1, prob = population_means_PCG),
       nrow = nobs,
       ncol = length(population_means_PCG),
       byrow = TRUE
@@ -234,16 +235,16 @@ phd_data <- function(nobs = 100, seed = NULL) {
 
   DCG <-
     matrix(
-      rmultinom(nobs, 1, prob = population_means_DCG),
+      stats::rmultinom(nobs, 1, prob = population_means_DCG),
       nrow = nobs,
       ncol = length(population_means_DCG),
       byrow = TRUE
     )
   colnames(DCG) <- paste0("DCG", 0:(length(population_means_DCG) - 1))
 
-  hprice <- rnorm(nobs, mean = 5.94)
-  gpdist <- rnorm(nobs, mean = 0.16)
-  hdist <- rnorm(nobs, mean = 4.38)
+  hprice <- stats::rnorm(nobs, mean = 5.94)
+  gpdist <- stats::rnorm(nobs, mean = 0.16)
+  hdist <- stats::rnorm(nobs, mean = 4.38)
 
   #########################################
   # Create self-assessed-health-based subgroups
@@ -316,7 +317,7 @@ phd_data <- function(nobs = 100, seed = NULL) {
 
   OECD <-
     matrix(
-      rmultinom(nobs, 1, prob = population_means_OECD),
+      stats::rmultinom(nobs, 1, prob = population_means_OECD),
       nrow = nobs,
       ncol = length(population_means_OECD),
       byrow = TRUE
@@ -385,7 +386,7 @@ phd_data <- function(nobs = 100, seed = NULL) {
 
   Xbeta <- beta_constant + as.matrix(X) %*% as.matrix(beta)
 
-  Y <- Xbeta + rlnorm(nobs, meanlog = 0, sdlog = 1)
+  Y <- Xbeta + stats::rlnorm(nobs, meanlog = 0, sdlog = 1)
 
   #########################################
   # Create data set
