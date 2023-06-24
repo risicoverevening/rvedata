@@ -21,15 +21,15 @@ set.seed(1000)
 #beta_dcg <- c(0,1356,6319,3565,5591,4262,7820,6038,8869,7983,18152,12626,9050,77982)
 
 # Table 6.9 (Adjusted REF weights)
-beta_constant <- c(653)
+beta_constant <- 653
 beta_gender_age <- c(0,-215,-325,462,377,1482,2780,1585,-120,339,-6,190,268,989,2271,1634)
 beta_incsrc <- c(1434,0,188,215,343,-195)
 beta_region <- c(224,54,-69,32,-156,-295,-197,-265,-89,0)
 beta_pcg <- c(0,1881,1799,1089,2005,3848,3177,3367,7796,3829,8032,11877,20722)
 beta_dcg <- c(0,1350,6316,3573,5592,4262,7855,6046,8887,8014,18157,12605,9037,77953)
-beta_hprice <- c(33)
-beta_hdist <- c(-112)
-beta_gpdist <- c(-5)
+beta_hprice <- 33
+beta_hdist <- -5
+beta_gpdist <- -112
 
 #########################################
 # Set probabilities risk adjusters
@@ -87,8 +87,8 @@ DCG <- matrix(rmultinom(nobs, 1, prob = population_means_DCG), nrow = nobs, ncol
 colnames(DCG) <- paste0("DCG", 0:(length(population_means_DCG)-1))
 
 hprice <- rnorm(nobs, mean = 5.94)
-hdist <- rnorm(nobs, mean = 4.38)
 gpdist <- rnorm(nobs, mean = 0.16)
+hdist <- rnorm(nobs, mean = 4.38)
 
 #########################################
 # Create self-assessed-health-based subgroups
@@ -116,13 +116,14 @@ MCS <- sum(c(-0.26540,-0.09193,-0.15782,-0.01826,0.25079,0.22837,0.41798,0.52900
 # Create one table w/ all risk adjusters
 #########################################
 
-X <- data.frame(gender_age,incsrc,region,PCG,DCG,PF,RP,BP,GH,VT,SF,RE,MH,OECD,CCI,hprice,hdist,gpdist)
+X <- data.frame(gender_age,incsrc,region,PCG,DCG,hprice,gpdist,hdist)
+beta <- c(beta_gender_age,beta_incsrc,beta_region,beta_pcg,beta_dcg,beta_hprice,beta_gpdist,beta_hdist)
 
 #########################################
 # Create health expenses variable
 #########################################
 
-Xbeta <- beta_constant + rowSums(X * c(beta_gender_age,beta_incsrc,beta_region,beta_pcg,beta_dcg,beta_hprice,beta_hdist,beta_gpdist))
+Xbeta <- beta_constant + as.matrix(X) %*% as.matrix(beta)
 
 Y <- Xbeta + rlnorm(nobs, meanlog = 0, sdlog = 1)
 
