@@ -14,11 +14,9 @@ under active development until further notice.
 
 ## Installation
 
-You can install the development version of rvedata from
-[GitHub](https://github.com/risicoverevening/rvedata.git) with:
-
 ``` r
-install.packages("https://github.com/risicoverevening/rvedata")
+# Install the development version from GitHub
+devtools::install_github("risicoverevening/rvedata")
 ```
 
 ## Contributing
