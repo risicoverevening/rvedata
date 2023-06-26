@@ -17,3 +17,25 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(rvedata)
 ```
+
+With the help of this package a simulated data set can be created for use in the context of risk equalization. The simulations are based on the tables published in the [PhD thesis](https://api.zotero.org/users/24775/publications/items/KBKWIQDJ/file/view) of [Piet Stam](https://www.pietstam.nl).
+
+Call the function `phd_data` to create a simulated data set. This function has two parameters: `nobs` and `seed`. Set `nobs` to the number of observations that you want to create, it will default to 100 observations if you omit this argument. For ease of replication, set `seed` to any number that you like (and are able to remember). A random seed will apply if you omit this second argument.
+
+Time for some basic examples. First create a data frame with 100 observations using a random seed:
+
+```{r}
+df <- phd_data()
+```
+
+To create a data frame with 1000 observations still using a random seed proceed as follows:
+
+```{r}
+df <- phd_data(1000)
+```
+
+And as a final introductory example, create a data frame with 1000 observations and set the seed to 1234:
+
+```{r}
+df <- phd_data(1000, 1234)
+```
