@@ -8,6 +8,13 @@
 \description{
 Datasets for learning and advancing risk equalization, enabling smart decisions and research.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://risicoverevening.github.io/rvedata/}
+}
+
+}
 \author{
 \strong{Maintainer}: Piet Stam \email{pjastam@gmail.com} (\href{https://orcid.org/0000-0003-3680-6391}{ORCID})
 
