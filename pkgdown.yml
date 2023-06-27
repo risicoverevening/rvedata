@@ -3,7 +3,8 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   phd_data: phd_data.html
-last_built: 2023-06-27T00:24Z
+  run_ols_regression: run_ols_regression.html
+last_built: 2023-06-27T08:24Z
 urls:
   reference: https://risicoverevening.github.io/rvedata/reference
   article: https://risicoverevening.github.io/rvedata/articles
