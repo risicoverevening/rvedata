@@ -17,6 +17,7 @@ Imports:
     truncnorm
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    magrittr
 VignetteBuilder: knitr
 URL: https://risicoverevening.github.io/rvedata/

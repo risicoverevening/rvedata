@@ -1,8 +1,8 @@
 ---
-title: "phd_data"
+title: "Create a set of simulated data"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{phd_data}
+  %\VignetteIndexEntry{Create a set of simulated data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

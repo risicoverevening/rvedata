@@ -1,0 +1,97 @@
+---
+title: "Run some OLS regressions"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{run-ols-regression}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(rvedata)
+library(magrittr)
+```
+
+In order to run a regression with the `phd_data` that you created, first we create the sets of variables to build the regression formulas. Notice that we omit one category of the `gender_age` variable, assuming that we include an intercept when running the regression. Also, we omit a reference category for each other variable. Of course, this does not hold for the continuous variables `hprice`, `gpdist` and `hdist`.
+
+```{r eval = FALSE}
+# Expenditures
+yvar <- "Y"
+# Age
+gender_age <- c(paste0("M_AGE", c(2:8)), paste0("F_AGE", c(1:8)))
+# Insurance eligibility
+incsrc <- paste0("INCSRC", c(1,3:6))
+# Region
+region <- paste0("REGION", c(1:9))
+# PCGs
+PCG <- paste0("PCG", c(1:12))
+# DCGs
+DCG <- paste0("DCG", c(1:13))
+# Hospital output price (in 100 euro)
+hprice <- c("hprice")
+# Distance to nearest GP
+gpdist <- c("gpdist")
+# Distance to nearest hospital
+hdist <- c("hdist")
+```
+
+Then we run a first regression with only `gender_age` included. Everything seems to look just fine.
+
+```{r eval = FALSE}
+xvars <- c(gender_age)
+
+formula1 <- paste0(yvar, " ~ ", paste(xvars, collapse="+")) %>% 
+  as.formula()
+
+lm1 <- lm(formula = formula1, data = rvedata::example_phd_data)
+
+summary(lm1)
+```
+
+The regression would look a bit different at first sight if we had included all categories of `gender_age`. Notice that the estimated coefficients in this regression are identical to those of the former regression if you add the estimated intercept to each estimated effect of `gender_age`.
+
+```{r eval = FALSE}
+xvars <- c("M_AGE1", gender_age)
+
+formula2 <- paste0(yvar, " ~ 0 + ", paste(xvars, collapse="+")) %>% 
+  as.formula()
+
+lm2 <- lm(formula = formula2, data = rvedata::example_phd_data)
+
+summary(lm2)
+```
+
+Let's move on and add the other risk adjusters. Notice that, as a consequence, the estimated coefficients for young people increase at the expense of older people. Why is that?
+
+```{r eval = FALSE}
+xvars <- c("M_AGE1", gender_age, incsrc, region, PCG, DCG)
+
+formula3 <- paste0(yvar, " ~ 0 + ", paste(xvars, collapse="+")) %>% 
+  as.formula()
+
+lm3 <- lm(formula = formula3, data = rvedata::example_phd_data)
+
+summary(lm3)
+```
+
+Finally, we check what happens if we include the N-type risk adjusters `hprice`, `gpdist` and `hdist` to the regression. Notice the `R-squared` value, what does this tell you?
+
+```{r eval = FALSE}
+xvars <- c("M_AGE1", gender_age, incsrc, region, PCG, DCG, hprice, gpdist, hdist)
+
+formula4 <- paste0(yvar, " ~ 0 + ", paste(xvars, collapse="+")) %>% 
+  as.formula()
+
+lm4 <- lm(formula = formula4, data = rvedata::example_phd_data)
+
+summary(lm4)
+```
+
+You may try for yourself to remove this so-called omitted variables bias from the regression. What did Schokkaert and Van de Voorde (2004) tell you to do?
